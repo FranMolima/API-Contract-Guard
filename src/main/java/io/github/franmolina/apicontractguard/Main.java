@@ -30,8 +30,12 @@ public class Main {
                     .get("/users")
                     .getGet();
 
-            List<Parameter> oldParameters = oldOperation.getParameters();
-            List<Parameter> newParameters = newOperation.getParameters();
+            List<Parameter> oldParameters = oldOperation.getParameters() != null
+                    ? oldOperation.getParameters()
+                    : List.of();
+            List<Parameter> newParameters = newOperation.getParameters() != null
+                    ? newOperation.getParameters()
+                    : List.of();
 
             System.out.println("OpenAPI specifications parsed successfully!");
 
@@ -55,38 +59,7 @@ public class Main {
             System.out.println("OLD summary: " + oldOperation.getSummary());
             System.out.println("NEW summary: " + newOperation.getSummary());
 
-            if (oldParameters != null
-                    && newParameters != null
-                    && !oldParameters.isEmpty()
-                    && !newParameters.isEmpty()) {
-
-                Parameter oldParameter = oldParameters.get(0);
-                Parameter newParameter = newParameters.get(0);
-
-                System.out.println();
-                System.out.println("============== PARAMETER ==================");
-
-                System.out.println("OLD name: " + oldParameter.getName());
-                System.out.println("NEW name: " + newParameter.getName());
-
-                System.out.println("OLD location: " + oldParameter.getIn());
-                System.out.println("NEW location: " + newParameter.getIn());
-
-                System.out.println("OLD required: " + oldParameter.getRequired());
-                System.out.println("NEW required: " + newParameter.getRequired());
-
-                if (oldParameter.getSchema() != null
-                        && newParameter.getSchema() != null) {
-
-                    System.out.println(
-                            "OLD type: " + oldParameter.getSchema().getType()
-                    );
-
-                    System.out.println(
-                            "NEW type: " + newParameter.getSchema().getType()
-                    );
-                }
-
+            if (oldParameters != null) {
                 System.out.println();
                 System.out.println("============== CHANGES ==================");
 
@@ -118,6 +91,14 @@ public class Main {
                                             + "' required status."
                             );
                         }
+                    }else {
+                        System.out.println(
+                                "WARNING: parameter '"
+                                        + parameter.getName()
+                                        + "' ("
+                                        + parameter.getIn()
+                                        + ") was removed in the new version."
+                        );
                     }
                 }
 

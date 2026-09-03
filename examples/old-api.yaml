@@ -12,9 +12,9 @@ paths:
         parameters:
           - name: country
             in: query
-            required: true
+            required: false
             schema:
-                type: string
+              type: string
         responses:
           '200':
             description: Users retrieved successfully

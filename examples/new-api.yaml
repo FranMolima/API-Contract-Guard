@@ -9,12 +9,7 @@ paths:
     get:
       summary: Get users
 
-      parameters:
-        - name: country
-          in: query
-          required: false
-          schema:
-            type: string
+
       responses:
         '200':
           description: Users retrieved successfully
